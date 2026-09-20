@@ -1,0 +1,20 @@
+/**
+* EXTERNAL LINK STYLING ⭐⭐⭐⭐⭐
+**/
+
+/* External Links; target all but images; append non-breaking figure space character and mask it. */
+/* FIGURE SPACE unicode character has 100:213 aspect ratio in FF and Chrome, 100:193 in Safari */
+/* Our mask image has a aspect ratio of 1:2 with a bit of spacing on all sides, suitable for cover */
+
+body a:is([rel*="external"], [target="_blank"], [data-type="link"]):not( :has(svg, img))::after {
+    --mask-image-arrow: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbDpzcGFjZT0ncHJlc2VydmUnIHN0eWxlPSdmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS41JyB2aWV3Qm94PScwIDAgNTAgMTAwJz48cGF0aCBkPSdNNDUgMzYgNiA3NW0xOS0zOWgyMG0wIDB2MjAnIHN0eWxlPSdzdHJva2U6I2ZmZjtzdHJva2Utd2lkdGg6NnB4Jy8+PC9zdmc+");
+    --mask-image-box: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbDpzcGFjZT0ncHJlc2VydmUnIHN0eWxlPSdmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS41JyB2aWV3Qm94PScwIDAgNTAgMTAwJz48cGF0aCBkPSdNNDUgNjZ2MTBtMCAwSDVtMCAwVjM2bTAgMGgxMG0zMCAwTDI1IDU2bTUtMjBoMTVtMCAwdjE1JyBzdHlsZT0nZmlsbDojZTNlM2UzO3N0cm9rZTojZmZmO3N0cm9rZS13aWR0aDo2cHgnLz48L3N2Zz4=");
+    margin-inline: .2em;
+    width: 1.4ch;
+    content: "\2007";
+    font-family: monospace;
+    background: currentColor;
+    mask-size: cover;
+    mask-position: center;
+    mask-image: var(--mask-image-box);
+}
