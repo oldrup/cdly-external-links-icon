@@ -4,7 +4,7 @@ Tags: external links, rel external, link icon, block editor, accessibility
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.0.10
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,10 +17,20 @@ Codeally External Links Icon automatically detects external links in post conten
 = Technical Architecture & Performance =
 
 * **Zero Database Footprint:** Makes no permanent modifications to your post content or database[cite: 3].
-* **Page Cache Integration:** Injects `rel="external"` on `the_content` filter before page caching layers (WP Rocket, LiteSpeed, Redis, NGINX FastCGI) capture the final HTML output[cite: 1, 7].
+* **Zero-Specificity Custom Property API:** Uses `:where(:root)` to expose `--cdly-external-links-icon`, allowing theme stylesheets or Block Editor custom CSS to switch icon presets without specificity conflicts.
+* **Page Cache Integration:** Injects `rel="external"` on `the_content` filter before page caching layers (WP Rocket, LiteSpeed, Redis, NGINX FastCGI) capture the final HTML output[cite: 1].
 * **Reversible:** Disabling or removing the plugin leaves zero residual data, orphan options, or markup changes in your database[cite: 3].
 * **Streaming HTML Parser:** Uses WordPress core `WP_HTML_Tag_Processor` for sub-millisecond execution without creating full DOM trees or memory allocations.
 * **Zero Client-Side JavaScript:** Renders icons strictly through browser-native CSS pseudo-elements and data-URI SVG masks without DOM mutations.
+
+= Customizing Icons via CSS =
+
+Switch between built-in presets globally or per-block without database options:
+
+* **Default Box Icon:** `--cdly-mask-image-box`
+* **Diagonal Arrow Icon:** `--cdly-mask-image-arrow`
+
+Set `--cdly-external-links-icon: var(--cdly-mask-image-arrow);` in your theme's stylesheet, the Customizer, or directly inside Block Editor Custom CSS (`& { --cdly-external-links-icon: var(--cdly-mask-image-arrow); }`).
 
 = Accessibility & Internationalization (i18n) =
 
@@ -41,11 +51,23 @@ Codeally External Links Icon automatically detects external links in post conten
 
 == Frequently Asked Questions ==
 
+= How do I change the external link icon? =
+Set `--cdly-external-links-icon` in your stylesheet or Customizer. For example, to switch to the diagonal arrow icon globally:
+
+`:root { --cdly-external-links-icon: var(--cdly-mask-image-arrow); }`
+
+= Can I change the icon for a specific block or group in the Block Editor? =
+Yes. In WordPress 7.0+, open the block settings sidebar, expand **Advanced > Custom CSS**, and add:
+
+`& { --cdly-external-links-icon: var(--cdly-mask-image-arrow); }`
+
+All external links inside that specific block/group will render with the arrow icon.
+
 = Does this plugin edit my database or post content? =
 No[cite: 3]. Modifications occur purely in memory during the execution of `the_content` filter. Original database content remains untouched[cite: 3].
 
 = How does this interact with page caching plugins? =
-Because `rel="external"` is injected server-side during the initial HTML request, page cache engines store the processed HTML string directly[cite: 1, 7]. Subsequent cached page requests serve the rendered link markup with zero PHP overhead.
+Because `rel="external"` is injected server-side during the initial HTML request, page cache engines store the processed HTML string directly[cite: 1]. Subsequent cached page requests serve the rendered link markup with zero PHP overhead.
 
 = Is this plugin accessible for screen reader users? =
 Yes. The plugin utilizes modern CSS alternative text syntax (`content: "\2007" / " (external link)"`) to pass accessible labels directly to the browser accessibility tree without adding visual text or extra HTML spans to your pages.
@@ -53,16 +75,18 @@ Yes. The plugin utilizes modern CSS alternative text syntax (`content: "\2007" /
 = How do I translate the "external link" screen reader text into my language? =
 The plugin is fully internationalized. You can translate strings using tools like Loco Translate or Poedit. Place your translated `.po` and `.mo` files in the plugin's `/languages/` directory (e.g., `cdly-external-links-icon-da_DK.mo`).
 
-= Is this compatible with page builders like Elementor or Bricks? =
-This plugin specifically targets core WordPress content filtering. While it may work with builders that adhere strictly to `the_content` filter pipeline, third-party page builders are not officially tested or supported.
-
 = Does this plugin have a settings page? =
-No[cite: 3]. This plugin is intentionally zero-configuration with zero database options[cite: 3].
+No[cite: 3]. This plugin is intentionally zero-configuration with zero database options[cite: 3]. Icon customization is handled natively through CSS custom properties.
 
 == Changelog ==
 
+= 0.2.0 =
+* Introduced zero-specificity CSS Custom Property API (`--cdly-external-links-icon`) using `:where(:root)`.
+* Added `--cdly-mask-image-arrow` (diagonal arrow) preset alongside `--cdly-mask-image-box` (default box icon).
+* Added support for container and block-level icon scoping in Block Editor Custom CSS.
+
 = 0.0.10 =
-* Removing the init hook and the load_plugin_textdomain()
+* Removed redundant `load_plugin_textdomain()` call to support WordPress 4.6+ JIT translations without Plugin Check PCP warnings.
 
 = 0.0.9 =
 * Added text domain loading (`Domain Path: /languages`) for i18n translation support.

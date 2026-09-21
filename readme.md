@@ -12,6 +12,7 @@ A lightweight, non-destructive WordPress plugin that dynamically appends `rel="e
 ## Highlights
 
 * **Zero Database Modifications:** Operates entirely in memory during content filtering. Disabling or removing the plugin leaves no residual data, options, or altered post content in your database.
+* **Zero-Specificity Design Tokens:** Declares default `--cdly-*` CSS custom properties inside `:where(:root)` with `0,0,0` specificity, enabling global or block-scoped icon overrides without specificity conflicts.
 * **Sub-Millisecond Execution:** Built on WordPress core's `WP_HTML_Tag_Processor` streaming parser rather than heavy DOM parsers or regex engines.
 * **Zero Client-Side JavaScript:** 100% server-side tag parsing paired with browser-native CSS rendering. No runtime JavaScript, DOM mutations, or client layout shifts.
 * **Page Cache Compatible:** Processes content on `the_content` filter before page cache layers (WP Rocket, LiteSpeed, NGINX FastCGI, Redis) cache the HTML output.
@@ -29,7 +30,6 @@ Visual icons are rendered via SVG CSS masks. Relational pseudo-selector `:not(:h
 
 ### 3. Dynamic i18n & Accessible Announcements
 Rather than injecting extra HTML `<span>` elements into post content, screen reader labels use CSS Generated Content Module Level 3 alternative text syntax. The localized string is supplied from PHP via `wp_add_inline_style()`:
-
 
 
 ---
@@ -63,6 +63,16 @@ To add a new language translation:
 1. Copy `languages/cdly-external-links-icon.pot` using tools like Loco Translate or Poedit.
 2. Generate language files targeting your locale (e.g., `cdly-external-links-icon-da_DK.po` and `.mo`).
 3. Place `.po`, `.mo`, and `.l10n.php` files directly inside the `/languages/` subfolder.
+
+
+## Customization
+
+Switch between built-in presets globally or per-block without database options:
+
+* **Default Box Icon:** `--cdly-mask-image-box`
+* **Diagonal Arrow Icon:** `--cdly-mask-image-arrow`
+
+Set `--cdly-external-links-icon: var(--cdly-mask-image-arrow);` in your theme's stylesheet, the Customizer, or directly inside Block Editor Custom CSS.
 
 ---
 

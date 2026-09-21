@@ -2,25 +2,32 @@
  * Codeally External Links Icon Styling
  */
 
-/* Target external links; exclude links wrapping SVG or img elements */
-body a[rel~="external"]:not(:has(svg, img))::after {
-    --mask-image-box: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbDpzcGFjZT0ncHJlc2VydmUnIHN0eWxlPSdmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS41JyB2aWV3Qm94PScwIDAgNTAgMTAwJz48cGF0aCBkPSdNNDUgNjZ2MTBtMCAwSDVtMCAwVjM2bTAgMGgxMG0zMCAwTDI1IDU2bTUtMjBoMTVtMCAwdjE1JyBzdHlsZT0nZmlsbDojZTNlM2UzO3N0cm9rZTojZmZmO3N0cm9rZS13aWR0aDo2cHgnLz48L3N2Zz4=");
+/* 1. Defaults set at 0,0,0 specificity so user overrides ALWAYS win */
+:where(:root) {
+    --cdly-mask-image-box: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbDpzcGFjZT0ncHJlc2VydmUnIHN0eWxlPSdmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS41JyB2aWV3Qm94PScwIDAgNTAgMTAwJz48cGF0aCBkPSdNNDUgNjZ2MTBtMCAwSDVtMCAwVjM2bTAgMGgxMG0zMCAwTDI1IDU2bTUtMjBoMTVtMCAwdjE1JyBzdHlsZT0nZmlsbDojZTNlM3UzO3N0cm9rZTojZmZmO3N0cm9rZS13aWR0aDo2cHgnLz48L3N2Zz4=");
+    --cdly-mask-image-arrow: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbDpzcGFjZT0ncHJlc2VydmUnIHN0eWxlPSdmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS41JyB2aWV3Qm94PScwIDAgNTAgMTAwJz48cGF0aCBkPSdNNDUgMzYgNiA3NW0xOS0zOWgyMG0wIDB2MjAnIHN0eWxlPSdzdHJva2U6I2ZmZjtzdHJva2Utd2lkdGg6NnB4Jy8+PC9zdmc+");
 
+    /* Default public property */
+    --cdly-external-links-icon: var(--cdly-mask-image-box);
+}
+
+/* 2. Target external links; exclude links wrapping SVG or img elements */
+body a[rel~="external"]:not(:has(svg, img))::after {
     /* Figure space fallback; localized alt-text is injected dynamically via wp_add_inline_style() */
     content: "\2007";
-    margin-inline-start: .2em;
+    margin-inline-start: .25em;
     width: 1.4ch;
     font-family: monospace;
     background: currentColor;
 
     /* Standard Masking */
-    mask-image: var(--mask-image-box);
+    mask-image: var(--cdly-external-links-icon);
     mask-size: cover;
     mask-position: center;
     mask-repeat: no-repeat;
 
     /* WebKit / Safari Fallbacks */
-    -webkit-mask-image: var(--mask-image-box);
+    -webkit-mask-image: var(--cdly-external-links-icon);
     -webkit-mask-size: cover;
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
