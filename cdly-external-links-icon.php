@@ -3,13 +3,14 @@
  * Plugin Name:       Codeally External Links Icon
  * Plugin URI:        https://github.com/oldrup/cdly-external-links-icon
  * Description:       Append rel="external" to all external links in post content and append a link icon via CSS
- * Version:           0.0.7
+ * Version:           0.0.10
  * Requires at least: 6.5
  * Requires PHP:      8.2
  * Author:            Codeally
  * Author URI:        https://codeally.dk
  * License:           GPL-2.0-or-later
  * Text Domain:       cdly-external-links-icon
+ * Domain Path:       /languages
  */
 
 declare(strict_types=1);
@@ -18,10 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CDLY_EXTERNAL_LINKS_ICON_VERSION', '0.0.6' );
+define( 'CDLY_EXTERNAL_LINKS_ICON_VERSION', '0.0.10' );
 
 /**
- * Enqueue plugin styles on the front end.
+ * Enqueue plugin styles on the front end and inject localized screen reader alt-text.
  */
 add_action( 'wp_enqueue_scripts', static function(): void {
 	wp_enqueue_style(
@@ -30,6 +31,17 @@ add_action( 'wp_enqueue_scripts', static function(): void {
 		array(),
 		CDLY_EXTERNAL_LINKS_ICON_VERSION
 	);
+
+	// Retrieve translated screen reader label via WordPress i18n (loaded JIT via Domain Path)
+	$external_label = __( 'external link', 'cdly-external-links-icon' );
+	
+	// Inject the localized alt-text rule inline immediately after the stylesheet
+	$inline_css = sprintf(
+		'body a[rel~="external"]:not(:has(svg, img))::after { content: "\2007" / " (%s)"; }',
+		esc_attr( $external_label )
+	);
+
+	wp_add_inline_style( 'cdly-external-links-icon', $inline_css );
 } );
 
 /**

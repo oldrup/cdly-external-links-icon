@@ -1,10 +1,10 @@
 === Codeally External Links Icon ===
 Contributors: oldrup
-Tags: external links, rel external, link icon, block editor, performance
+Tags: external links, rel external, link icon, block editor, accessibility
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.0.7
+Stable tag: 0.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,10 +22,16 @@ Codeally External Links Icon automatically detects external links in post conten
 * **Streaming HTML Parser:** Uses WordPress core `WP_HTML_Tag_Processor` for sub-millisecond execution without creating full DOM trees or memory allocations.
 * **Zero Client-Side JavaScript:** Renders icons strictly through browser-native CSS pseudo-elements and data-URI SVG masks without DOM mutations.
 
+= Accessibility & Internationalization (i18n) =
+
+* **Screen Reader Announced:** Uses CSS `content` alternative text syntax (`/ " (external link)"`) so screen readers (NVDA, JAWS, VoiceOver) announce external links naturally without cluttering the DOM with extra HTML `<span>` tags.
+* **Fully Translatable:** All user-facing strings and screen reader labels use standard WordPress i18n functions (`__()`) and support custom translations via `.po` / `.mo` files in the `/languages/` folder.
+* **High Contrast / WCAG Compliant:** Includes `@media (forced-colors: active)` fallbacks for Windows High Contrast mode (WCAG 1.4.11).
+
 = Compatibility & Baseline Requirements =
 
 * **Content Scope:** Built and tested strictly for native WordPress Core Block Editor content (Paragraphs, Buttons, Lists, etc.)[cite: 5]. Third-party page builders (Elementor, Bricks, Divi) are not officially supported.
-* **Browser Baseline:** Uses CSS `:has()` pseudo-class targeting to prevent icons from rendering inside links that wrap images or inline SVGs. Requires modern browsers supporting `:has()` (Chrome 105+, Safari 15.4+, Firefox 121+, Edge 105+ / Late 2023+ Baseline).
+* **Browser Baseline:** Uses CSS `:has()` pseudo-class targeting to prevent icons from rendering inside links that wrap images or inline SVGs. Requires modern browsers supporting `:has()` and CSS alt-text (Chrome 105+, Safari 15.4+, Firefox 128+, Edge 105+).
 
 == Installation ==
 
@@ -41,16 +47,31 @@ No[cite: 3]. Modifications occur purely in memory during the execution of `the_c
 = How does this interact with page caching plugins? =
 Because `rel="external"` is injected server-side during the initial HTML request, page cache engines store the processed HTML string directly[cite: 1, 7]. Subsequent cached page requests serve the rendered link markup with zero PHP overhead.
 
+= Is this plugin accessible for screen reader users? =
+Yes. The plugin utilizes modern CSS alternative text syntax (`content: "\2007" / " (external link)"`) to pass accessible labels directly to the browser accessibility tree without adding visual text or extra HTML spans to your pages.
+
+= How do I translate the "external link" screen reader text into my language? =
+The plugin is fully internationalized. You can translate strings using tools like Loco Translate or Poedit. Place your translated `.po` and `.mo` files in the plugin's `/languages/` directory (e.g., `cdly-external-links-icon-da_DK.mo`).
+
 = Is this compatible with page builders like Elementor or Bricks? =
 This plugin specifically targets core WordPress content filtering. While it may work with builders that adhere strictly to `the_content` filter pipeline, third-party page builders are not officially tested or supported.
 
 = Does this plugin have a settings page? =
 No[cite: 3]. This plugin is intentionally zero-configuration with zero database options[cite: 3].
 
-= Which browsers support the external icon? =
-The icon relies on CSS mask-image and the `:has()` relational selector. Supported in all major browsers released since late 2023 (Chrome 105+, Safari 15.4+, Firefox 121+).
-
 == Changelog ==
+
+= 0.0.10 =
+* Removing the init hook and the load_plugin_textdomain()
+
+= 0.0.9 =
+* Added text domain loading (`Domain Path: /languages`) for i18n translation support.
+* Dynamic localized screen reader label injection via `wp_add_inline_style()`.
+
+= 0.0.8 =
+* Added screen reader accessibility context directly in CSS `content` syntax.
+* Added `forced-colors: active` high-contrast mode media query for WCAG 1.4.11 compliance.
+* Precision-tuned `:not(:has(svg, img))` selector and `margin-inline-start` punctuation handling.
 
 = 0.0.7 =
 * Updated short description syntax to pass Plugin Check PCP validation.
