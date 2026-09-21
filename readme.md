@@ -40,7 +40,7 @@ Rather than injecting extra HTML `<span>` elements into post content, screen rea
 | :--- | :--- |
 | **WordPress** | 6.5+ |
 | **PHP** | 8.2+ |
-| **Browsers** | Chrome 105+, Safari 15.4+, Firefox 128+, Edge 105+ (Late 2023+ Baseline for `:has()` and CSS alt-text) |
+| **Browsers** | Chrome 105+, Safari 15.4+, Firefox 128+ (Late 2023+ Baseline for `:has()` and CSS alt-text) |
 | **Content Scope** | Core WordPress Block Editor content (Paragraphs, Buttons, Lists, etc.) |
 
 > **Note on Page Builders:** Built specifically for native WordPress Core content filtering. Third-party page builders (Elementor, Bricks, Divi) are not officially supported.
@@ -49,11 +49,7 @@ Rather than injecting extra HTML `<span>` elements into post content, screen rea
 
 ## Installation
 
-1. Download or clone this repository into your WordPress plugins directory:
-   ```bash
-   cd wp-content/plugins/
-   git clone https://github.com/oldrup/cdly-external-links-icon.git
-   ```
+1. Download or clone this repository into your WordPress plugins directory.
 2. Activate **Codeally External Links Icon** via the 'Plugins' menu in WordPress.
 3. External links in post content will automatically receive `rel="external"` and the link icon on the front end.
 
