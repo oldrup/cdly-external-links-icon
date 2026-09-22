@@ -12,7 +12,7 @@
 }
 
 /* 2. Target external links; exclude links wrapping SVG or img elements */
-body a[rel~="external"]:not(:has(svg, img))::after {
+body a:is([rel~="external"], [target="_blank"]):not(:has(svg, img))::after {
     /* Figure space fallback; localized alt-text is injected dynamically via wp_add_inline_style() */
     content: "\2007";
     margin-inline-start: .25em;
