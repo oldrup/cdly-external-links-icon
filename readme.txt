@@ -4,7 +4,7 @@ Tags: external links, rel external, link icon, block editor, accessibility
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,12 @@ The plugin is fully internationalized. You can translate strings using tools lik
 
 = Does this plugin have a settings page? =
 No[cite: 3]. This plugin is intentionally zero-configuration with zero database options[cite: 3]. Icon customization is handled natively through CSS custom properties.
+
+
+
+== Changelog ==
+= 0.3.2 =
+* Added --cdly-external-links-margin property to finetune margin between link and icon
 
 == Changelog ==
 = 0.3.0 =
