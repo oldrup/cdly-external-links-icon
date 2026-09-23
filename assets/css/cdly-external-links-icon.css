@@ -12,7 +12,7 @@
 }
 
 /* 2. Target external links; exclude links wrapping SVG or img elements */
-body a[rel~="external"]:not(:has(svg, img))::after {
+body a:is([rel~="external"], [target="_blank"], [data-type="link"]):not(:has(svg, img))::after {
     /* Figure space fallback; localized alt-text is injected dynamically via wp_add_inline_style() */
     content: "\2007";
     margin-inline-start: .25em;
@@ -31,15 +31,4 @@ body a[rel~="external"]:not(:has(svg, img))::after {
     -webkit-mask-size: cover;
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
-}
-
-/* Forced Colors Mode Fallback (Windows High Contrast / WCAG 1.4.11) */
-@media (forced-colors: active) {
-    body a[rel~="external"]:not(:has(svg, img))::after {
-        content: " ↗";
-        background: none;
-        mask-image: none;
-        -webkit-mask-image: none;
-        width: auto;
-    }
 }

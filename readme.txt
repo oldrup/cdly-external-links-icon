@@ -4,7 +4,7 @@ Tags: external links, rel external, link icon, block editor, accessibility
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,8 @@ The plugin is fully internationalized. You can translate strings using tools lik
 No[cite: 3]. This plugin is intentionally zero-configuration with zero database options[cite: 3]. Icon customization is handled natively through CSS custom properties.
 
 == Changelog ==
+= 0.3.0 =
+* Added [target="_blank"] and [data-type="link"] to candidates for external links
 
 = 0.2.0 =
 * Introduced zero-specificity CSS Custom Property API (`--cdly-external-links-icon`) using `:where(:root)`.
